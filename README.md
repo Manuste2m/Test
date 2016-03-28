@@ -1,2 +1,2 @@
 # Test
-# Test Kuy
+# Test TERM
