@@ -849,8 +849,6 @@ class Window:
         elif  (len(self.plotTypeOlt)) == 0:
             print ("NoPlot")
         del self.plotTypeOlt[:]
-
-
 root = Tk()
 window=Window(root)
 root.mainloop()
