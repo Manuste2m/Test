@@ -1,26 +1,23 @@
-import  unittest
+import xlrd , unittest
 
-def eiei(name) :
-    return ("Name : "+name)
+def func(filename):
+    workbook = xlrd.open_workbook(filename)
+    sheed = workbook.sheet_by_index(0)
+    listHead = []
+    for x in range(sheed.ncols):
+        listHead.append(str(sheed.cell_value(0, x)))
+    return listHead
 
-print (eiei("Term"))
+#def test_answer():
+    #assert func("/Users/Verapong/Desktop/Bi/test.xlsx") == ['Zone','County','Sale','Date','Quantity']
+
 
 
 class TestStringMethods(unittest.TestCase):
 
-  def test_upper(self):
-      self.assertEqual('foo'.upper(), 'FOO')
+  def test_Head(self):
+      self.assertEquals(func("/Users/Verapong/Desktop/Bi/test.xlsx"),['Zone','County','Sale','Date','Quantity'])
 
-  def test_isupper(self):
-      self.assertTrue('FOO'.isupper())
-      self.assertFalse('Foo'.isupper())
-
-  def test_split(self):
-      s = 'hello world'
-      self.assertEqual(s.split(), ['hello', 'world'])
-      # check that s.split fails when the separator is not a string
-      with self.assertRaises(TypeError):
-          s.split(2)
 
 if __name__ == '__main__':
     unittest.main()
