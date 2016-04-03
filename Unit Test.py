@@ -41,7 +41,7 @@ class TestStringMethods(unittest.TestCase):
       self.assertEquals(func(),['Zone','County','Sale','Date','Quantity'])
 
   def test_InHead(self):
-      self.assertEquals(listINheadN(func()[1]),['Asia','Eupore'])
+      self.assertEquals(listINheadN(func()[0]),['Asia','Eupore'])
 
 if __name__ == '__main__':
     unittest.main()
