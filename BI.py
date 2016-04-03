@@ -850,6 +850,7 @@ class Window:
             print ("NoPlot")
         del self.plotTypeOlt[:]
 
+
 root = Tk()
 window=Window(root)
 root.mainloop()
