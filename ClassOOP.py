@@ -238,7 +238,7 @@ yearlist = B.getlistyear()
 print (yearlist)
 sumA = B.listYear('2012',14)
 sumB = B.listMonth('1',14)
-sale = B.saleMonth('High','Sales','1','2010',14)
+sale = B.saleMonth('High','Sales','1','2012',14)
 print (sale)
 
 
