@@ -60,6 +60,17 @@ class Business:
                 numlist.append(x)
         return numlist
 
+    def listMonth(self,month,dateHead):
+        numlist = []
+        for x in range(1, self.sheed.nrows):
+            load = self.sheed.cell_value(x, dateHead)
+            timeNew = xlrd.xldate_as_tuple(load,0)
+            timeNewer = str(datetime.datetime(*timeNew))
+            dateAll = datetime.datetime.strptime(timeNewer, '%Y-%m-%d %H:%M:%S')
+            if(("%s"%dateAll.month)==month):
+                numlist.append(x)
+        return numlist
+
     def wordAgain(self,listAll):
         listAllnew = []
         for i in range(len(listAll)):
@@ -105,7 +116,6 @@ class Business:
 
         DontTypeDimensions = []
         DontTypeDimensionsLocation = []
-        self.yearlist = []
 
         for x in range(self.sheed.ncols):
             print (type(self.sheed.cell_value(1, x)))
@@ -151,14 +161,8 @@ class Business:
             self.listTypeDimensions.remove(self.listTypeDimensions[self.listSaveGUI[x]])
             self.listTypeDimensionsLocation.remove(self.listTypeDimensionsLocation[self.listSaveGUI[x]])
 
-        self.countylist = []
-        for i in range(len(self.listTypeInDimensions)):
-            self.countylist.append([])
-            for j in range(len(self.listTypeInDimensions[i])):
-                print (self.listTypeInDimensions[i][j])
-                self.countylist[i].append(A.listInDimensionsFunc(self.listTypeInDimensions[i][j]))
-
     def setYearlist(self,dateHead):
+        self.yearlist = []
         for x in range(1, self.sheed.nrows):
             load = self.sheed.cell_value(x, dateHead)
             timeNew = xlrd.xldate_as_tuple(load,0)
@@ -166,6 +170,28 @@ class Business:
             dateAll = datetime.datetime.strptime(timeNewer, '%Y-%m-%d %H:%M:%S')
             year = str(("%s"%dateAll.year))
             self.yearlist.append(year)
+        self.yearlist = (self.wordAgain(self.yearlist))
+        self.yearlist.sort()
+
+    def saleMonth(self,Name,Measures,month,year,dateHead):
+        Sale = 0
+        plotHead = self.searchHead(Measures)
+        yearlist = self.listYear(year,dateHead)
+        monthlist = self.listMonth(month,dateHead)
+        datelist = self.returnMatches(yearlist,monthlist)
+        print (datelist)
+        namelist = self.listInDimensionsFunc(Name)
+        sumlist = self.returnMatches(datelist,namelist)
+        print (sumlist)
+        if (len(sumlist) != 0):
+            for i in range(len(sumlist)):
+                Sale = Sale + self.sheed.cell_value(sumlist[i], plotHead)
+        else:
+            Sale = 0
+        return  Sale
+
+    def returnMatches(self,a,b):
+       return list(set(a) & set(b))
 
     def getlistTypeDate(self):
         return self.listTypeDate
